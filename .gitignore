@@ -71,3 +71,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+toi-shop-excercise/.idea
+toi-shop-excercise/UserSettings
+toi-shop-excercise/Library
+toi-shop-excercise/Temp
+toi-shop-excercise/obj
