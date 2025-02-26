@@ -682,6 +682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca84c5d72bc19b64fb88bd30b2979d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  constants: {fileID: 11400000, guid: 2489826b83b8c7f4293fac037adea729, type: 2}
   timerUI: {fileID: 1428055157}
   scoreUI: {fileID: 1246210748}
   gameOverPanel: {fileID: 379914433149200950}
@@ -690,6 +691,8 @@ MonoBehaviour:
   characters:
   - {fileID: 1778168154796582922, guid: e1a0f0f962f656f47b2308d91aba1c85, type: 3}
   - {fileID: 7438118462538491460, guid: 0053f6ed1ec1d4d4290949ceeb9c6f03, type: 3}
+  selectionIndicatorPrefab: {fileID: 763375740831263799, guid: 8fb3b0391ec309e4f8f74c7fa20ee8b2, type: 3}
+  isGameOver: 0
 --- !u!4 &1211023441
 Transform:
   m_ObjectHideFlags: 0
@@ -1027,7 +1030,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa8eaf1f9e64c8c4489a040a1011b3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightEveryXSeconds: 5
   regions:
   - {fileID: 559838149}
   - {fileID: 420133605}
