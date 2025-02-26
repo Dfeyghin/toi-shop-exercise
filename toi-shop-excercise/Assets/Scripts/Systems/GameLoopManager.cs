@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Entities;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -16,10 +18,8 @@ namespace Systems
         [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private TextMeshProUGUI gameOverText;
         [SerializeField] private Button restartButton;
-        
-        [SerializeField] private GameObject character1;
-        [SerializeField] private GameObject character2;
-        
+        [SerializeField] private List<GameObject> characters;
+
         private TextMeshProUGUI _timerText;
         private TextMeshProUGUI _scoreText;
         
@@ -32,6 +32,7 @@ namespace Systems
         void Awake()
         {
             Instance = this;
+            SpawnCharacters();
         }
 
         void Start()
@@ -42,6 +43,7 @@ namespace Systems
             
             restartButton.onClick.AddListener(RestartGame);
             StartCoroutine(TimerCountdown());
+            
             
         }
 
@@ -69,6 +71,28 @@ namespace Systems
             {
                 _score++;
                 _scoreText.text = _score.ToString();
+            }
+        }
+
+        void SpawnCharacters()
+        {
+            List<Region> availableRegions = RegionsController.Instance.Regions.FindAll(r => !r.IsOccupied);;
+            for (int i = 0; i < characters.Count; i++)
+            {
+                if (availableRegions.Count == 0 || availableRegions.Count < characters.Count)
+                {
+                    Debug.LogWarning("Not enough available regions to place all characters!");
+                    return;
+                }
+                int randomIndex = Random.Range(0, availableRegions.Count); // Pick a random region
+                Region chosenRegion = availableRegions[randomIndex];
+                
+                GameObject characterInstance = Instantiate(characters[i], chosenRegion.transform.position, Quaternion.identity);
+                characterInstance.transform.position = chosenRegion.transform.position;
+                
+                chosenRegion.IsOccupied = true;
+
+                availableRegions.RemoveAt(randomIndex);
             }
         }
 
