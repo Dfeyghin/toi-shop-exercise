@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Systems
 {
@@ -9,13 +10,6 @@ namespace Systems
     {
         //singleton pattern:
         public static RegionsController Instance { get; private set; }
-
-
-        [SerializeField] private float highlightEveryXSeconds = 5f;
-        [SerializeField] private List<Region> regions;
-        public List<Region> Regions => regions;
-
-        private Region _lastRegionHighlighted;
         private void Awake()
         {
             if (Instance == null)
@@ -27,6 +21,13 @@ namespace Systems
                 Destroy(gameObject); // Ensure only one instance exists
             }
         }
+        
+        [SerializeField] private List<Region> regions;
+        public List<Region> Regions => regions;
+        
+        private Region _lastRegionHighlighted;
+
+        
         void Start()
         {
             StartCoroutine(HighlightRegions());
@@ -34,13 +35,14 @@ namespace Systems
 
         IEnumerator HighlightRegions()
         {
-            while (true)
+            //wait for a while before first highlight:
+            yield return new WaitForSeconds(GameLoopManager.Instance.constants.Timing.timeWithNoHighlightWhenGameStarts);
+            while (!GameLoopManager.Instance.isGameOver)
             {
-                //highlight another region before removing the old highlight for the purpose of not selecting twice the same region
                 var newRegion = HighlightRandomRegion();
-                _lastRegionHighlighted?.RemoveHighlight();
+                // _lastRegionHighlighted?.RemoveHighlight();
                 _lastRegionHighlighted = newRegion;
-                yield return new WaitForSeconds(highlightEveryXSeconds);
+                yield return new WaitForSeconds(GameLoopManager.Instance.constants.Timing.timeBetweenHighlights);
             }
         }
 
