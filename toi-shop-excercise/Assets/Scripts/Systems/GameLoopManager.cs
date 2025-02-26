@@ -17,6 +17,9 @@ namespace Systems
         [SerializeField] private TextMeshProUGUI gameOverText;
         [SerializeField] private Button restartButton;
         
+        [SerializeField] private GameObject character1;
+        [SerializeField] private GameObject character2;
+        
         private TextMeshProUGUI _timerText;
         private TextMeshProUGUI _scoreText;
         

@@ -19,14 +19,14 @@ namespace Systems
         {
             while (true)
             {
-                yield return new WaitForSeconds(highlightEveryXSeconds);
                 HighlightRandomRegion();
+                yield return new WaitForSeconds(highlightEveryXSeconds);
             }
         }
 
         void HighlightRandomRegion()
         {
-            List<Region> availableRegions = regions.FindAll(r => !r.isOccupied);
+            List<Region> availableRegions = regions.FindAll(r => !r.isOccupied && !r.isHighlighted);
             if (availableRegions.Count <= 0) return;
             int randomIndex = Random.Range(0, availableRegions.Count);
             availableRegions[randomIndex].Highlight();
